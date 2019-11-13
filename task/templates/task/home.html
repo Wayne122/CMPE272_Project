@@ -1,0 +1,43 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+    <h2 class="page-title text-center">Welcome,</h2>
+
+    {% if user.is_authenticated %}
+        <p class="user-name text-center">{{ user.first_name }} {{ user.last_name }}.</p>
+        <p class="text-right"><a href="{% url 'upload_wp' %}">Upload a whitepaper</a></p>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Uploader FN</th>
+                        <th>Uploader LN</th>
+                        <th>Uploaded At</th>
+                        <th>Updated At</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for oneObject in object_list %}
+                        <tr>
+                            <td><a href="{{ oneObject.WPFile.url }}" target="_blank">{{ oneObject.WPFile.name }}</a></td>
+                            <td>{{ oneObject.owner.first_name }}</td>
+                            <td>{{ oneObject.owner.last_name }}</td>
+                            <td>{{ oneObject.uploadTime }}</td>
+                            <td>{{ oneObject.updateTime }}</td>
+                            <td>{{ oneObject.description }}</td>
+                            {% if user.is_authenticated and oneObject.owner == user %}
+                                <td><a href="{% url 'update_wp' id=oneObject.id %}">Update</a></td>
+                                <td><a href="{% url 'delete_wp' id=oneObject.id %}">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p class="text-right"><a href="{% url 'upload_wp' %}">Upload a whitepaper</a></p>
+    {% else %}
+        <h3 class="text-center">Please login first.</h3>
+    {% endif %}
+{% endblock %}

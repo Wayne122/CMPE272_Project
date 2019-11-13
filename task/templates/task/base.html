@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Template</title>
+    </head>
+    <body>
+        <div class="page-header">
+            <h1 class="site-title text-center"><a href="/">Template</a></h1>
+            {% if user.is_authenticated %}
+                <p class="log text-center"><a href="{% url 'logout' %}">Logout</a></p>
+            {% else %}
+                <p class="log text-center"><a href="{% url 'login' %}">Login</a></p>
+                <p class="log text-center"><a href="{% url 'register' %}">Sign Up</a></p>
+            {% endif %}
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                {% block content %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
