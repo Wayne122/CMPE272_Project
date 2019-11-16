@@ -4,7 +4,8 @@
     <br>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ user_form.as_p }}
+        {{ user_role_form.as_p }}
         <button type="submit">Sign Up</button>
     </form>
 

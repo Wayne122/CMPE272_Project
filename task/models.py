@@ -7,6 +7,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
+class userRole(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=2, choices=[('PO', 'Project Owner'), ('EX', 'Expert'), ('AM', 'Ambassador')])
+
+
 def validate_file_ext(value):
     if os.path.splitext(os.path.basename(value.name))[1] != '.pdf':
         raise ValidationError("Please upload pdf files only.")

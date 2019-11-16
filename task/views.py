@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import whitePaper, videos, testQuestions
+from .models import whitePaper, videos, testQuestions, userRole
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -11,6 +11,7 @@ def home(request):
     object_list = None
     if request.user.is_authenticated:
         object_list = whitePaper.objects.all()
+        print(request.user.userrole.role)  # Testing
     return render(request, 'task/home.html', {'object_list': object_list})
 
 
@@ -18,7 +19,7 @@ class wpForm(forms.ModelForm):
     class Meta:
         model = whitePaper
         fields = ['WPFile', 'title', 'description', 'dueTime']
-        exclude = ('uploader', )
+        exclude = ('uploader',)
 
 
 def upload_wp(request):
@@ -68,15 +69,28 @@ class registrationForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email']
 
 
+class userRoleForm(forms.ModelForm):
+    role = forms.CharField(max_length=2, widget=forms.Select(choices=[('PO', 'Project Owner'), ('EX', 'Expert'), ('AM', 'Ambassador')]))
+    class Meta:
+        model = userRole
+        fields = ['role']
+        exclude = ['user']
+
+
 def register(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
     else:
         if request.method == 'POST':
-            form = registrationForm(request.POST)
-            if form.is_valid():
-                new_user = form.save()
+            user_form = registrationForm(request.POST)
+            user_role_form = userRoleForm(request.POST)
+            if user_form.is_valid() and user_role_form.is_valid():
+                new_user_role = user_role_form.save(commit=False)
+                new_user = user_form.save()
+                new_user_role.user = new_user
+                user_role_form.save()
                 return HttpResponseRedirect('/')
         else:
-            form = registrationForm()
-        return render(request, 'task/registration/register.html', {'form': form})
+            user_form = registrationForm()
+            user_role_form = userRoleForm()
+        return render(request, 'task/registration/register.html', {'user_form': user_form, 'user_role_form': user_role_form})
