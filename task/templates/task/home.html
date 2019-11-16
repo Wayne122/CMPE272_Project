@@ -4,7 +4,7 @@
     <h2 class="page-title text-center">Welcome,</h2>
 
     {% if user.is_authenticated %}
-        <p class="user-name text-center">{{ user.first_name }} {{ user.last_name }}.</p>
+        <p class="user-name text-center">{{ user.first_name }} {{ user.last_name }} {{ user.userrole.role }}.</p>
         <p class="text-right"><a href="{% url 'upload_wp' %}">Upload a whitepaper</a></p>
         <div class="container">
             <table>
