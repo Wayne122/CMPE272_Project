@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import uuid
 import os
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -20,7 +19,6 @@ def validate_file_ext(value):
 
 
 class whitePaper(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     WPFile = models.FileField(validators=[validate_file_ext])
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=1024, blank=True)
@@ -33,7 +31,6 @@ class whitePaper(models.Model):
 
 
 class videos(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     video_url = models.URLField()
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=1024, blank=True)
@@ -44,7 +41,6 @@ class videos(models.Model):
 
 
 class testQuestions(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     q1 = models.TextField()
     a1 = models.TextField()
     a2 = models.TextField()
