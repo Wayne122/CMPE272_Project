@@ -23,10 +23,10 @@ def management_page(request):
     return render(request, 'blog/management_page.html', {})
 
 def uploadwhitepage_page(request):
-    return render(request, 'blog/uploadwhite.html', {})
+    return render(request, 'blog/upload_wp.html', {})
 
 def updatewhitepage_page(request):
-    return render(request, 'blog/updatewhite.html', {})
+    return render(request, 'blog/update_wp.html', {})
 
 def classlist_page(request):
     return render(request, 'blog/classlist.html', {})
@@ -44,4 +44,4 @@ def updateclass_page(request):
     return render(request, 'blog/update_class.html', {})
 
 def createquiz_page(request):
-    return render(request, 'blog/createquiz.html', {})
+    return render(request, 'blog/upload_quiz.html', {})

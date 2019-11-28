@@ -1,0 +1,62 @@
+{% extends 'task/base.html' %}
+{% block content %}
+<body>
+  <ul id="menu">
+      <li>
+          <input id="check02" type="checkbox" name="menu" />
+          <label for="check02"><span class="fa fa-bars" aria-hidden="true"></span></label>
+          <ul class="submenu">
+              <li><a href="/">Home</a></li>
+              <li><a href="#class" class="scroll">Class</a></li>
+              <li><a href="#management" class="scroll">Management</a></li>
+              <li><a href="#bottom" class="scroll">Bottom</a></li>
+          </ul>
+      </li>
+  </ul>
+  <section class="services py-lg-5 py-4" id="WhitePaper">
+    <div class="container py-sm-4 py-4">
+              <h1>Welcome to Quizlist Page!</h1>
+    </div>
+    <div class="price-button mt-md-3 mt-2">
+        <a class="btn text-uppercase" href="{% url 'upload_quiz' wp_id=wp_id %}">Upload a Quiz Question!</a>
+    </div>
+  </section>
+  <section class="services py-lg-5 py-4" id="WhitePaper">
+    <div class="container py-sm-4 py-4">
+      <section>
+        {% for q in qz_list %}
+        <table>
+          <tr>
+            <th>Q. {{ q.q1 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ q.a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ q.a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ q.a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ q.a4 }}</td>
+          </tr>
+          <tr>
+            <td>A. {{ q.CA }}</td>
+          </tr>
+        </table>
+        <div align=center class="price-button mt-md-3 mt-2">
+            <a class="btn text-uppercase" href="{% url 'delete_quiz' wp_id=wp_id qz_id=q.id %}">Delete!</a>
+        </div>
+        {% endfor %}
+      </section>
+    </div>
+    <div align=center class="price-button mt-md-3 mt-2">
+        <a class="btn text-uppercase" href="{% url 'class_list' wp_id=wp_id %}">Back to classes</a>
+    </div>
+  </section>
+
+
+
+</body>
+{% endblock %}

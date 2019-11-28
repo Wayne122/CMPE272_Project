@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf.urls import include, re_path
 from django.contrib.auth import views as auth_views
 
-from task.views import home, register, upload_wp, update_wp, delete_wp
+from task.views import home, register, upload_wp, update_wp, wp_list, class_list, upload_class, update_class, quiz_list, upload_quiz, take_quiz, delete_quiz
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
@@ -26,7 +26,16 @@ urlpatterns = [
     re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     re_path(r'^register/$', register, name='register'),
 
+    re_path(r'^wp_list/$', wp_list, name='wp_list'),
     re_path(r'^upload_wp/$', upload_wp, name='upload_wp'),
-    re_path(r'^update_wp/(?P<id>[\w-]+)/$', update_wp, name='update_wp'),
-    re_path(r'^delete_wp/(?P<id>[\w-]+)/$', delete_wp, name='delete_wp'),
+    re_path(r'^update_wp/(?P<wp_id>[\w-]+)/$', update_wp, name='update_wp'),
+
+    re_path(r'^class_list/(?P<wp_id>[\w-]+)/$', class_list, name='class_list'),
+    re_path(r'^upload_class/(?P<wp_id>[\w-]+)/$', upload_class, name='upload_class'),
+    re_path(r'^update_class/(?P<wp_id>[\w-]+)/(?P<cl_id>[\w-]+)$', update_class, name='update_class'),
+
+    re_path(r'^quiz_list/(?P<wp_id>[\w-]+)/$', quiz_list, name='quiz_list'),
+    re_path(r'^upload_quiz/(?P<wp_id>[\w-]+)/$', upload_quiz, name='upload_quiz'),
+    re_path(r'^take_quiz/(?P<wp_id>[\w-]+)/$', take_quiz, name='take_quiz'),
+    re_path(r'^delete_quiz/(?P<wp_id>[\w-]+)/(?P<qz_id>[\w-]+)$', delete_quiz, name='delete_quiz'),
 ]

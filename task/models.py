@@ -22,7 +22,7 @@ class whitePaper(models.Model):
     WPFile = models.FileField(validators=[validate_file_ext])
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=1024, blank=True)
-    dueTime = models.DateTimeField()
+    dueTime = models.DateField()
     uploadTime = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)
     uploader = models.ForeignKey(User, related_name='uploader', on_delete=models.CASCADE)
@@ -30,22 +30,20 @@ class whitePaper(models.Model):
     acceptor = models.ForeignKey(User, related_name='acceptor', on_delete=models.CASCADE, null=True, blank=True)
 
 
-class videos(models.Model):
+class wpClass(models.Model):
     video_url = models.URLField()
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=1024, blank=True)
     uploadTime = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)
-    uploader = models.ForeignKey(User, on_delete=models.CASCADE)
     WP = models.ForeignKey(whitePaper, on_delete=models.CASCADE)
 
 
-class testQuestions(models.Model):
+class wpQuiz(models.Model):
     q1 = models.TextField()
     a1 = models.TextField()
     a2 = models.TextField()
     a3 = models.TextField()
     a4 = models.TextField()
-    CA = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(4)])
-    uploader = models.ForeignKey(User, on_delete=models.CASCADE)
+    CA = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
     WP = models.ForeignKey(whitePaper, on_delete=models.CASCADE)
