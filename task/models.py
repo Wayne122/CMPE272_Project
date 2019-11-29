@@ -41,9 +41,38 @@ class wpClass(models.Model):
 
 class wpQuiz(models.Model):
     q1 = models.TextField()
-    a1 = models.TextField()
-    a2 = models.TextField()
-    a3 = models.TextField()
-    a4 = models.TextField()
-    CA = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+    q1a1 = models.TextField()
+    q1a2 = models.TextField()
+    q1a3 = models.TextField()
+    q1a4 = models.TextField()
+    q1ans = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+
+    q2 = models.TextField()
+    q2a1 = models.TextField()
+    q2a2 = models.TextField()
+    q2a3 = models.TextField()
+    q2a4 = models.TextField()
+    q2ans = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+
+    q3 = models.TextField()
+    q3a1 = models.TextField()
+    q3a2 = models.TextField()
+    q3a3 = models.TextField()
+    q3a4 = models.TextField()
+    q3ans = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+
+    q4 = models.TextField()
+    q4a1 = models.TextField()
+    q4a2 = models.TextField()
+    q4a3 = models.TextField()
+    q4a4 = models.TextField()
+    q4ans = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+
+    q5 = models.TextField()
+    q5a1 = models.TextField()
+    q5a2 = models.TextField()
+    q5a3 = models.TextField()
+    q5a4 = models.TextField()
+    q5ans = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+
     WP = models.ForeignKey(whitePaper, on_delete=models.CASCADE)

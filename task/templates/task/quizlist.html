@@ -17,39 +17,121 @@
     <div class="container py-sm-4 py-4">
               <h1>Welcome to Quizlist Page!</h1>
     </div>
+    {% if not qz_list %}
     <div class="price-button mt-md-3 mt-2">
         <a class="btn text-uppercase" href="{% url 'upload_quiz' wp_id=wp_id %}">Upload a Quiz Question!</a>
     </div>
+    {% endif %}
   </section>
   <section class="services py-lg-5 py-4" id="WhitePaper">
     <div class="container py-sm-4 py-4">
+      {% if qz_list %}
       <section>
-        {% for q in qz_list %}
         <table>
           <tr>
-            <th>Q. {{ q.q1 }}</th>
+            <th>Q. {{ qz_list.q1 }}</th>
           </tr>
           <tr>
-            <td>1. {{ q.a1 }}</td>
+            <td>1. {{ qz_list.q1a1 }}</td>
           </tr>
           <tr>
-            <td>2. {{ q.a2 }}</td>
+            <td>2. {{ qz_list.q1a2 }}</td>
           </tr>
           <tr>
-            <td>3. {{ q.a3 }}</td>
+            <td>3. {{ qz_list.q1a3 }}</td>
           </tr>
           <tr>
-            <td>4. {{ q.a4 }}</td>
+            <td>4. {{ qz_list.q1a4 }}</td>
           </tr>
           <tr>
-            <td>A. {{ q.CA }}</td>
+            <td>A. {{ qz_list.q1ans }}</td>
           </tr>
         </table>
-        <div align=center class="price-button mt-md-3 mt-2">
-            <a class="btn text-uppercase" href="{% url 'delete_quiz' wp_id=wp_id qz_id=q.id %}">Delete!</a>
-        </div>
-        {% endfor %}
+        <table>
+          <tr>
+            <th>Q. {{ qz_list.q2 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ qz_list.q2a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ qz_list.q2a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ qz_list.q2a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ qz_list.q2a4 }}</td>
+          </tr>
+          <tr>
+            <td>A. {{ qz_list.q2ans }}</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <th>Q. {{ qz_list.q3 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ qz_list.q3a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ qz_list.q3a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ qz_list.q3a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ qz_list.q3a4 }}</td>
+          </tr>
+          <tr>
+            <td>A. {{ qz_list.q3ans }}</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <th>Q. {{ qz_list.q4 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ qz_list.q4a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ qz_list.q4a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ qz_list.q4a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ qz_list.q4a4 }}</td>
+          </tr>
+          <tr>
+            <td>A. {{ qz_list.q4ans }}</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <th>Q. {{ qz_list.q5 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ qz_list.q5a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ qz_list.q5a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ qz_list.q5a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ qz_list.q5a4 }}</td>
+          </tr>
+          <tr>
+            <td>A. {{ qz_list.q5ans }}</td>
+          </tr>
+        </table>
       </section>
+      <div align=center class="price-button mt-md-3 mt-2">
+          <a class="btn text-uppercase" href="{% url 'update_quiz' wp_id=wp_id%}">Update</a>
+      </div>
+      {% endif %}
     </div>
     <div align=center class="price-button mt-md-3 mt-2">
         <a class="btn text-uppercase" href="{% url 'class_list' wp_id=wp_id %}">Back to classes</a>

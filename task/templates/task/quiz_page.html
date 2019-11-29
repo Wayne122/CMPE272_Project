@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %}
+{% extends 'task/base.html' %}
 {% block content %}
 <body>
   <ul id="menu">
@@ -15,19 +15,113 @@
   </ul>
         <section id= managment>
         <div align="center" class="price-button mt-md-3 mt-2">
-            <a class="btn text-uppercase" href="{% url 'homepage' %}">Welcome to Quiz platform!</a>
+            <a class="btn text-uppercase" href="{% url 'home' %}">Welcome to Quiz platform!</a>
         </div>
       </section>
 
       <section class="services py-lg-5 py-4" id="influcencer">
         <div class="container py-sm-4 py-4">
-          <section class="services py-lg-5 py-4" id="WhitePaper">
-              {% for q in qz_list %}
-          </section>
+      <section>
+      <form method="post" enctype="multipart/form-data">
+        <table>
+          <tr>
+            <th>Q1. {{ get_quiz.q1 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ get_quiz.q1a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ get_quiz.q1a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ get_quiz.q1a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ get_quiz.q1a4 }}</td>
+          </tr>
+        </table>
+            {% csrf_token %}
+            {{ ans1.as_p }}
+        <table>
+          <tr>
+            <th>Q2. {{ get_quiz.q2 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ get_quiz.q2a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ get_quiz.q2a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ get_quiz.q2a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ get_quiz.q2a4 }}</td>
+          </tr>
+        </table>
+            {% csrf_token %}
+            {{ ans2.as_p }}
+        <table>
+          <tr>
+            <th>Q3. {{ get_quiz.q3 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ get_quiz.q3a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ get_quiz.q3a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ get_quiz.q3a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ get_quiz.q3a4 }}</td>
+          </tr>
+        </table>
+            {% csrf_token %}
+            {{ ans3.as_p }}
+        <table>
+          <tr>
+            <th>Q4. {{ get_quiz.q4 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ get_quiz.q4a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ get_quiz.q4a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ get_quiz.q4a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ get_quiz.q4a4 }}</td>
+          </tr>
+        </table>
+            {% csrf_token %}
+            {{ ans4.as_p }}
+        <table>
+          <tr>
+            <th>Q5. {{ get_quiz.q5 }}</th>
+          </tr>
+          <tr>
+            <td>1. {{ get_quiz.q5a1 }}</td>
+          </tr>
+          <tr>
+            <td>2. {{ get_quiz.q5a2 }}</td>
+          </tr>
+          <tr>
+            <td>3. {{ get_quiz.q5a3 }}</td>
+          </tr>
+          <tr>
+            <td>4. {{ get_quiz.q5a4 }}</td>
+          </tr>
+        </table>
+            {% csrf_token %}
+            {{ ans5.as_p }}
+        <button type="submit" name="submit">Submit!</button>
+      </form>
+      </section>
         </div>
       </section>
-      <div align=center class="price-button mt-md-3 mt-2">
-          <a class="btn text-uppercase" href="classlistpage">Finish!</a>
-      </div>
 </body>
 {% endblock %}

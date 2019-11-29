@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf.urls import include, re_path
 from django.contrib.auth import views as auth_views
 
-from task.views import home, register, upload_wp, update_wp, wp_list, class_list, upload_class, update_class, quiz_list, upload_quiz, take_quiz, delete_quiz
+from task.views import home, register, upload_wp, update_wp, wp_list, class_list, upload_class, update_class, quiz_list, upload_quiz, take_quiz, update_quiz
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
@@ -37,5 +37,5 @@ urlpatterns = [
     re_path(r'^quiz_list/(?P<wp_id>[\w-]+)/$', quiz_list, name='quiz_list'),
     re_path(r'^upload_quiz/(?P<wp_id>[\w-]+)/$', upload_quiz, name='upload_quiz'),
     re_path(r'^take_quiz/(?P<wp_id>[\w-]+)/$', take_quiz, name='take_quiz'),
-    re_path(r'^delete_quiz/(?P<wp_id>[\w-]+)/(?P<qz_id>[\w-]+)$', delete_quiz, name='delete_quiz'),
+    re_path(r'^update_quiz/(?P<wp_id>[\w-]+)/$', update_quiz, name='update_quiz'),
 ]

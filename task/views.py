@@ -113,15 +113,13 @@ def update_class(request, wp_id, cl_id):
 
 def quiz_list(request, wp_id):
     if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).acceptor == request.user:
-        qz_list = wpQuiz.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
+        qz_list = wpQuiz.objects.get(WP=whitePaper.objects.get(pk=wp_id))
     return render(request, 'task/quizlist.html', {'qz_list': qz_list, 'wp_id': wp_id})
 
 
 class wpQuizForm(forms.ModelForm):
-    CA = forms.CharField(label='Answer:', max_length=1, widget=forms.Select(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))
     class Meta:
         model = wpQuiz
-        field = ['q1', 'a1', 'a2', 'a3', 'a4', 'CA']
         exclude = ('WP',)
 
 
@@ -133,10 +131,7 @@ def upload_quiz(request, wp_id):
                 new_quiz = form.save(commit=False)
                 new_quiz.WP = whitePaper.objects.get(pk=wp_id)
                 form.save()
-                if 'next' in request.POST:
-                    form = wpQuizForm()
-                else:
-                    return HttpResponseRedirect('/quiz_list/'+wp_id)
+                return HttpResponseRedirect('/quiz_list/'+wp_id)
         else:
             form = wpQuizForm()
         return render(request, 'task/upload_quiz.html', {'form': form, 'wp_id': wp_id})
@@ -144,24 +139,67 @@ def upload_quiz(request, wp_id):
         return HttpResponseRedirect('/')
 
 
-def take_quiz(request, wp_id):
-    if request.user.is_authenticated:
-        qz_list = wpQuiz.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
+def update_quiz(request, wp_id):
+    if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).acceptor == request.user:
+        sel_quiz = wpQuiz.objects.get(WP=whitePaper.objects.get(pk=wp_id))
+        form = wpQuizForm(request.POST or None, instance=sel_quiz)
         if request.method == 'POST':
-            pass
-        else:
-
-            return render(request, 'task/quiz_page.html', {'qz_list': qz_list, 'ansSheet': ansSheet})
-
+            form.save()
+            return HttpResponseRedirect('/quiz_list/'+wp_id)
+        return render(request, 'task/upload_quiz.html', {'form': form, 'wp_id': wp_id})
     else:
         return  HttpResponseRedirect('/')
 
 
-def delete_quiz(request, wp_id, qz_id):
-    if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).acceptor == request.user:
-        sel_quiz = wpQuiz.objects.get(pk=qz_id)
-        sel_quiz.delete()
-        return HttpResponseRedirect('/quiz_list/'+wp_id)
+class ans1_sheet(forms.Form):
+    ans1 = forms.CharField(max_length=1, widget=forms.Select(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))
+
+
+class ans2_sheet(forms.Form):
+    ans2 = forms.CharField(max_length=1, widget=forms.Select(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))
+
+
+class ans3_sheet(forms.Form):
+    ans3 = forms.CharField(max_length=1, widget=forms.Select(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))
+
+
+class ans4_sheet(forms.Form):
+    ans4 = forms.CharField(max_length=1, widget=forms.Select(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))
+
+
+class ans5_sheet(forms.Form):
+    ans5 = forms.CharField(max_length=1, widget=forms.Select(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))
+
+
+def take_quiz(request, wp_id):
+    if request.user.is_authenticated:
+        get_quiz = wpQuiz.objects.get(WP=whitePaper.objects.get(pk=wp_id))
+        if request.method == 'POST':
+            ans1 = ans1_sheet(request.POST)
+            ans2 = ans2_sheet(request.POST)
+            ans3 = ans3_sheet(request.POST)
+            ans4 = ans4_sheet(request.POST)
+            ans5 = ans5_sheet(request.POST)
+            if ans1.is_valid() and ans2.is_valid() and ans3.is_valid() and ans4.is_valid() and ans5.is_valid():
+                i = 0
+                if ans1.cleaned_data['ans1'] == get_quiz.q1ans:
+                    i += 1
+                if ans2.cleaned_data['ans2'] == get_quiz.q2ans:
+                    i += 1
+                if ans3.cleaned_data['ans3'] == get_quiz.q3ans:
+                    i += 1
+                if ans4.cleaned_data['ans4'] == get_quiz.q4ans:
+                    i += 1
+                if ans5.cleaned_data['ans5'] == get_quiz.q5ans:
+                    i += 1
+                print(i)  # Number of correction
+                return HttpResponseRedirect('/class_list/'+wp_id)
+        ans1 = ans1_sheet()
+        ans2 = ans2_sheet()
+        ans3 = ans3_sheet()
+        ans4 = ans4_sheet()
+        ans5 = ans5_sheet()
+        return render(request, 'task/quiz_page.html', {'get_quiz': get_quiz, 'ans1': ans1, 'ans2': ans2, 'ans3': ans3, 'ans4': ans4, 'ans5': ans5})
     else:
         return  HttpResponseRedirect('/')
 

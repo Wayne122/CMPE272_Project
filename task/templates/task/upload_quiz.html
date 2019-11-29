@@ -25,8 +25,7 @@
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" name="next">Upload and Next!</button>
-        <button type="submit" name="finish">Upload and Exit!</button>
+        <button type="submit" name="next">Upload!</button>
       </form>
       <div class="price-button mt-md-3 mt-2">
           <a class="btn text-uppercase" href="{% url 'quiz_list' wp_id=wp_id %}">Cancel</a>
