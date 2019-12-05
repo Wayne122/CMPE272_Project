@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<body>
+  <ul id="menu">
+      <li>
+          <input id="check02" type="checkbox" name="menu" />
+          <label for="check02"><span class="fa fa-bars" aria-hidden="true"></span></label>
+          <ul class="submenu">
+              <li><a href="http://127.0.0.1:8000/">Home</a></li>
+              <li><a href="#class" class="scroll">Class</a></li>
+              <li><a href="#management" class="scroll">Management</a></li>
+              <li><a href="#bottom" class="scroll">Bottom</a></li>
+          </ul>
+      </li>
+  </ul>
+  <section class="services py-lg-5 py-4" id="WhitePaper">
+    <div class="container py-sm-4 py-4">
+              <h1>Welcome to Classlist Page!</h1>
+              <div class="price-button mt-md-3 mt-2">
+                  <a class="btn text-uppercase" href="uploadclasspage">Upload Class!</a>
+              </div>
+              <div class="price-button mt-md-3 mt-2">
+                  <a class="btn text-uppercase" href="updateclasspage">Update Class!</a>
+              </div>
+    </div>
+  </section>
+  <section class="services py-lg-5 py-4" id="WhitePaper">
+    <div class="container py-sm-4 py-4">
+      <section>
+        <section>
+        </section>
+        <h1>Below is Classes Table!!</h1>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>do whatever you want!</td>
+          </tr>
+        </table>
+      </section>
+    </div>
+  </section>
+  <section>
+    <h1>Quiz Part!!!</h1>
+  </section>
+    <section>
+      <div class="price-button mt-md-3 mt-2">
+          <a class="btn text-uppercase" href="quizlistpage">Take the Quiz!</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="price-button mt-md-3 mt-2">
+          <a class="btn text-uppercase" href="quizlistpage">Create the Quiz!</a>
+      </div>
+    </section>
+
+</body>
+{% endblock %}
