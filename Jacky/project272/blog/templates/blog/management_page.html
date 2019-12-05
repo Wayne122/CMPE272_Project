@@ -1,10 +1,7 @@
 
 {% extends 'blog/base.html' %}
 {% block content %}
-{% if not user.is_authenticated %}
-<body onLoad="parent.location='homepage'">
-</body>
-{% endif %}
+
 <body>
   <ul id="menu">
       <li>

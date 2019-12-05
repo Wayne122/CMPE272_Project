@@ -17,18 +17,22 @@
     <div class="tlinks">Collect from <a>FatherOfLove</a></div>
     <!--/ banner-bottom-w3ls -->
 
-    {% if  user.is_authenticated %}
+    {% if  not user.is_authenticated %}
     <section>
       <div class="price-button mt-md-3 mt-2">
         <div>
-            <img src="static/images/home_after_login.png" class="img-fluid" alt="mobile-image" align=center >
+            <img src="static/images/home_after_login.png" class="img-fluid" alt="mobile-image" align=center width="990" height="625" border="0" usemap="#Map_home" >
+            <map name="Map_home">
+            <area target="_blank" href="classlistpage" target="_self" coords="38,6,430,614" shape="rect" >
+            <area target="_blank" href="managementpage" target="_self" coords="580,9,939,612" shape="rect" >
+        </map>
         </div>
       </div>
     </section>
     {% endif %}
 
 
-    {% if not user.is_authenticated %}
+    {% if  user.is_authenticated %}
 
     <section class="banner-bottom-w3ls py-lg-5 py-4" id="about">
         <div class="container py-sm-5 py-4">
