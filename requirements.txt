@@ -1,0 +1,6 @@
+boto3
+Django
+django-cleanup
+django-storages
+mysqlclient
+python-decouple
