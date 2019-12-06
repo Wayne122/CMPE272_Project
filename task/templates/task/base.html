@@ -39,6 +39,19 @@
           <div class="header-wthree-top-w3layouts text-right">
               <h1 class="logo"><a href="/">POP</a></h1>
               <ul class="list-unstyled apps-lists text-right">
+                  {% if user.is_authenticated %}
+                  <h class="user-name text-center">{{ user.first_name }} {{ user.last_name }}.</h>
+                  <li>
+                      <a href="{% url 'logout' %}" class="btn"><span class="fa fa-apple mr-2" aria-hidden="true"></span>Logout</a>
+                  </li>
+                  {% else %}
+                  <li>
+                      <a href="{% url 'login' %}" class="btn"><span class="fa fa-apple mr-2" aria-hidden="true"></span>Login</a>
+                  </li>
+                  <li>
+                      <a href="{% url 'register' %}" class="btn"><span class="fa fa-apple mr-2" aria-hidden="true"></span>Register</a>
+                  </li>
+                  {% endif %}
                   <li>
                       <a href="/" class="btn"><span class="fa fa-apple mr-2" aria-hidden="true"></span>Home</a>
                   </li>

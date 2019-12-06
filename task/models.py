@@ -27,7 +27,7 @@ class whitePaper(models.Model):
     updateTime = models.DateTimeField(auto_now=True)
     uploader = models.ForeignKey(User, related_name='uploader', on_delete=models.CASCADE)
     accepted = models.BooleanField(default=False)
-    acceptor = models.ForeignKey(User, related_name='acceptor', on_delete=models.CASCADE, null=True, blank=True)
+    acceptor = models.ForeignKey(User, related_name='wp_acceptor', on_delete=models.CASCADE, null=True, blank=True)
 
 
 class wpClass(models.Model):
@@ -76,3 +76,19 @@ class wpQuiz(models.Model):
     q5ans = models.CharField(max_length=1, choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
 
     WP = models.ForeignKey(whitePaper, on_delete=models.CASCADE)
+
+
+class wpTask(models.Model):
+    title = models.CharField(max_length=128)
+    description = models.TextField(max_length=1024, blank=True)
+    dueTime = models.DateField()
+    uploadTime = models.DateTimeField(auto_now_add=True)
+    updateTime = models.DateTimeField(auto_now=True)
+    WP = models.ForeignKey(whitePaper, on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
+    acceptor = models.ForeignKey(User, related_name='task_acceptor', on_delete=models.CASCADE, null=True, blank=True)
+
+
+class taskFiles(models.Model):
+    WPFile = models.FileField(blank=True, null=True)
+    wpt = models.ForeignKey(wpTask, on_delete=models.CASCADE)

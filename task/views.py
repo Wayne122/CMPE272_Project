@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .models import whitePaper, wpClass, wpQuiz, userRole
+from .models import whitePaper, wpClass, wpQuiz, userRole, wpTask
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 
 # Create your views here.
@@ -14,8 +15,15 @@ def home(request):
 
 def wp_list(request):
     if request.user.is_authenticated:
-        wplist = whitePaper.objects.all()
-    return render(request, 'task/whitepaperlist.html', {'wplist': wplist})
+        if request.user.userrole.role == 'EX':
+            wplist = whitePaper.objects.filter(Q(accepted=False) | Q(acceptor=request.user))
+        elif request.user.userrole.role == 'PO':
+            wplist = whitePaper.objects.filter(uploader=request.user)
+        elif request.user.userrole.role == 'AM':
+            wplist = whitePaper.objects.filter(accepted=True)
+        return render(request, 'task/whitepaperlist.html', {'wplist': wplist})
+    else:
+        return HttpResponseRedirect('/login/')
 
 
 class wpForm(forms.ModelForm):
@@ -28,7 +36,12 @@ class wpForm(forms.ModelForm):
 
 def upload_wp(request):
     if request.user.is_authenticated:
-        wplist = whitePaper.objects.all()
+        if request.user.userrole.role == 'EX':
+            wplist = whitePaper.objects.filter(Q(accepted=False) | Q(acceptor=request.user))
+        elif request.user.userrole.role == 'PO':
+            wplist = whitePaper.objects.filter(uploader=request.user)
+        elif request.user.userrole.role == 'AM':
+            wplist = whitePaper.objects.filter(accepted=True)
         if request.method == 'POST':
             form = wpForm(request.POST, request.FILES)
             if form.is_valid():
@@ -44,18 +57,30 @@ def upload_wp(request):
 
 
 def update_wp(request, wp_id):
-    if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).uploader == request.user:
-        wplist = whitePaper.objects.all()
+    if request.user.is_authenticated:
+        if request.user.userrole.role == 'EX':
+            wplist = whitePaper.objects.filter(Q(accepted=False) | Q(acceptor=request.user))
+        elif request.user.userrole.role == 'PO':
+            wplist = whitePaper.objects.filter(uploader=request.user)
+        elif request.user.userrole.role == 'AM':
+            wplist = whitePaper.objects.filter(accepted=True)
         old_file = whitePaper.objects.get(pk=wp_id)
-        if 'delete' in request.POST:
-            old_file.delete()
-            return HttpResponseRedirect('/wp_list/')
-        elif 'update' in request.POST or 'upload' in request.POST:
-            form = wpForm(request.POST or None, request.FILES, instance=old_file)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect('/update_wp/'+wp_id)
-            return render(request, 'task/upload_wp.html', {'form': form, 'wplist': wplist})
+        if old_file.uploader == request.user:
+            if 'delete' in request.POST:
+                old_file.delete()
+                return HttpResponseRedirect('/wp_list/')
+            elif 'update' in request.POST or 'upload' in request.POST:
+                form = wpForm(request.POST or None, request.FILES, instance=old_file)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect('/update_wp/'+wp_id)
+                return render(request, 'task/upload_wp.html', {'form': form, 'wplist': wplist})
+        elif not old_file.accepted and request.user.userrole.role == 'EX':
+            if 'accept' in request.POST:
+                old_file.accepted = True
+                old_file.acceptor = request.user
+                old_file.save()
+                return HttpResponseRedirect('/update_wp/' + wp_id)
 
         return render(request, 'task/update_wp.html', {'old_file': old_file, 'wplist': wplist})
     else:
@@ -63,9 +88,11 @@ def update_wp(request, wp_id):
 
 
 def class_list(request, wp_id):
-    if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).acceptor == request.user:
+    if request.user.is_authenticated:
         cl_list = wpClass.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
-    return render(request, 'task/classlist.html', {'cl_list': cl_list, 'wp_id': wp_id})
+        return render(request, 'task/classlist.html', {'cl_list': cl_list, 'wp_id': wp_id})
+    else:
+        return HttpResponseRedirect('/')
 
 
 class wpClassForm(forms.ModelForm):
@@ -83,6 +110,7 @@ def upload_class(request, wp_id):
             if form.is_valid():
                 new_class = form.save(commit=False)
                 new_class.WP = whitePaper.objects.get(pk=wp_id)
+                new_class.video_url = new_class.video_url.replace("watch?v=", "embed/")
                 form.save()
                 return HttpResponseRedirect('/class_list/'+wp_id)
         else:
@@ -93,18 +121,21 @@ def upload_class(request, wp_id):
 
 
 def update_class(request, wp_id, cl_id):
-    if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).acceptor == request.user:
+    if request.user.is_authenticated:
         cl_list = wpClass.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
         old_class = wpClass.objects.get(pk=cl_id)
-        if 'delete' in request.POST:
-            old_class.delete()
-            return HttpResponseRedirect('/class_list/'+wp_id)
-        elif 'update' in request.POST or 'upload' in request.POST:
-            form = wpClassForm(request.POST or None, instance=old_class)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect('/update_class/'+wp_id+'/'+cl_id)
-            return render(request, 'task/upload_class.html', {'form': form, 'cl_list': cl_list, 'wp_id': wp_id})
+        if whitePaper.objects.get(pk=wp_id).acceptor == request.user:
+            if 'delete' in request.POST:
+                old_class.delete()
+                return HttpResponseRedirect('/class_list/'+wp_id)
+            elif 'update' in request.POST or 'upload' in request.POST:
+                form = wpClassForm(request.POST or None, instance=old_class)
+                if form.is_valid():
+                    new_class = form.save(commit=False)
+                    new_class.video_url = new_class.video_url.replace("watch?v=", "embed/")
+                    form.save()
+                    return HttpResponseRedirect('/update_class/'+wp_id+'/'+cl_id)
+                return render(request, 'task/upload_class.html', {'form': form, 'cl_list': cl_list, 'wp_id': wp_id})
 
         return render(request, 'task/update_class.html', {'old_class': old_class, 'cl_list': cl_list, 'wp_id': wp_id})
     else:
@@ -113,8 +144,13 @@ def update_class(request, wp_id, cl_id):
 
 def quiz_list(request, wp_id):
     if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).acceptor == request.user:
-        qz_list = wpQuiz.objects.get(WP=whitePaper.objects.get(pk=wp_id))
-    return render(request, 'task/quizlist.html', {'qz_list': qz_list, 'wp_id': wp_id})
+        try:
+            qz_list = wpQuiz.objects.get(WP=whitePaper.objects.get(pk=wp_id))
+        except:
+            qz_list = None
+        return render(request, 'task/quizlist.html', {'qz_list': qz_list, 'wp_id': wp_id})
+    else:
+        return HttpResponseRedirect('/')
 
 
 class wpQuizForm(forms.ModelForm):
@@ -202,6 +238,74 @@ def take_quiz(request, wp_id):
         return render(request, 'task/quiz_page.html', {'get_quiz': get_quiz, 'ans1': ans1, 'ans2': ans2, 'ans3': ans3, 'ans4': ans4, 'ans5': ans5})
     else:
         return  HttpResponseRedirect('/')
+
+
+def task_list(request, wp_id):
+    if request.user.is_authenticated:
+        if whitePaper.objects.get(pk=wp_id).uploader == request.user:
+            t_list = wpTask.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
+        elif request.user.userrole.role == 'AM':
+            t_list = wpTask.objects.filter(Q(WP=whitePaper.objects.get(pk=wp_id)) | Q(accepted=False))
+        else:
+            return HttpResponseRedirect('/wp_list/')
+
+        return render(request, 'task/task_list.html', {'t_list': t_list, 'wp_id': wp_id})
+    else:
+        return HttpResponseRedirect('/')
+
+
+class wpTaskForm(forms.ModelForm):
+    dueTime = forms.DateField(label='Due Time', widget=forms.SelectDateWidget)
+    class Meta:
+        model = wpTask
+        fields = ['title', 'description', 'dueTime']
+        exclude = ('WP',)
+
+
+def upload_task(request, wp_id):
+    if request.user.is_authenticated and whitePaper.objects.get(pk=wp_id).uploader == request.user:
+        t_list = wpTask.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
+        if request.method == 'POST':
+            form = wpTaskForm(request.POST)
+            if form.is_valid():
+                new_task = form.save(commit=False)
+                new_task.WP = whitePaper.objects.get(pk=wp_id)
+                form.save()
+                return HttpResponseRedirect('/task_list/'+wp_id)
+        else:
+            form = wpTaskForm()
+        return render(request, 'task/upload_task.html', {'form': form, 't_list': t_list, 'wp_id': wp_id})
+    else:
+        return HttpResponseRedirect('/')
+
+
+def update_task(request, wp_id, t_id):
+    if request.user.is_authenticated:
+        if whitePaper.objects.get(pk=wp_id).uploader == request.user:
+            t_list = wpTask.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
+        elif request.user.userrole.role == 'AM':
+            t_list = wpTask.objects.filter(Q(WP=whitePaper.objects.get(pk=wp_id)) | Q(accepted=False))
+        old_task = wpTask.objects.get(pk=t_id)
+        if whitePaper.objects.get(pk=wp_id).uploader == request.user:
+            if 'delete' in request.POST:
+                old_task.delete()
+                return HttpResponseRedirect('/task_list/'+wp_id)
+            elif 'update' in request.POST or 'upload' in request.POST:
+                form = wpTaskForm(request.POST or None, instance=old_task)
+                if form.is_valid():
+                    form.save()
+                    return HttpResponseRedirect('/update_task/'+wp_id+'/'+t_id)
+                return render(request, 'task/upload_task.html', {'form': form, 't_list': t_list, 'wp_id': wp_id})
+        elif not old_task.accepted and request.user.userrole.role == 'AM':
+            if 'accept' in request.POST:
+                old_task.accepted = True
+                old_task.acceptor = request.user
+                old_task.save()
+                return HttpResponseRedirect('/update_task/' + wp_id)
+
+        return render(request, 'task/update_task.html', {'old_task': old_task, 't_list': t_list, 'wp_id': wp_id})
+    else:
+        return HttpResponseRedirect('/')
 
 
 class registrationForm(UserCreationForm):

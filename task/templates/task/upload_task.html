@@ -1,5 +1,6 @@
 {% extends 'task/base.html' %}
 {% block content %}
+
 <body>
   <ul id="menu">
       <li>
@@ -15,20 +16,13 @@
   </ul>
   <section class="services py-lg-5 py-4" id="WhitePaper">
     <div class="container py-sm-4 py-4">
-      <h1>Update Class!!!</h1>
       <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <p>Title: {{ old_class.title }}</p>
-          <p>Video URL: <a href="{{ old_class.video_url }}" target="_blank">{{ old_class.video_url }}</a></p>
-          <iframe width="420" height="315" src="{{ old_class.video_url }}"></iframe>
-          <p>Description: {{ old_class.description }}</p>
-          {% if user.userrole.role == "EX" %}
-          <button type="submit" name="update">Update!</button>
-          <button type="submit" name="delete">Delete!</button>
-          {% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="upload">Upload!</button>
       </form>
       <div class="price-button mt-md-3 mt-2">
-          <a class="btn text-uppercase" href="{% url 'class_list' wp_id=wp_id %}">Cancel</a>
+          <a class="btn text-uppercase" href="{% url 'task_list' wp_id=wp_id %}">Cancel</a>
       </div>
     </div>
   </section>
@@ -38,13 +32,15 @@
         <tr>
           <th>Title</th>
           <th>Description</th>
+          <th>Duetime</th>
           <th></th>
         </tr>
-        {% for oneCL in cl_list %}
-            <tr>
-              <td><a href="{% url 'update_class' wp_id=wp_id cl_id=oneCL.id %}">{{ oneCL.title }}</a></td>
-              <td>{{ oneCL.description }}</td>
-            </tr>
+        {% for oneTask in t_list %}
+          <tr>
+              <td><a href="{% url 'update_task' wp_id=wp_id t_id=oneTask.id %}">{{ oneTask.title }}</a></td>
+              <td>{{ oneTask.description }}</td>
+              <td>{{ oneTask.dueTime }}</td>
+          </tr>
         {% endfor %}
       </table>
     </div>
