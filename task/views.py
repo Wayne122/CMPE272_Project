@@ -243,6 +243,9 @@ def task_list(request, wp_id):
             t_list = wpTask.objects.filter(WP=whitePaper.objects.get(pk=wp_id))
         elif request.user.userrole.role == 'AM':
             t_list = wpTask.objects.filter(Q(WP=whitePaper.objects.get(pk=wp_id)) | Q(accepted=False))
+        else:
+            return HttpResponseRedirect('/wp_list/')
+
         return render(request, 'task/task_list.html', {'t_list': t_list, 'wp_id': wp_id})
     else:
         return HttpResponseRedirect('/')
