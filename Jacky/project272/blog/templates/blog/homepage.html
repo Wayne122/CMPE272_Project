@@ -6,9 +6,10 @@
           <input id="check02" type="checkbox" name="menu" />
           <label for="check02"><span class="fa fa-bars" aria-hidden="true"></span></label>
           <ul class="submenu">
-              <li><a href="">Home</a></li>
-              <li><a href="classlistpage" class="scroll">Class</a></li>
-              <li><a href="managment" class="scroll">Management</a></li>
+              <li><a href="/">Login</a></li>
+              <li><a href="/">Home</a></li>
+              <li><a href="#class" class="scroll">Class</a></li>
+              <li><a href="#management" class="scroll">Management</a></li>
               <li><a href="#bottom" class="scroll">Bottom</a></li>
           </ul>
       </li>
@@ -19,20 +20,14 @@
 
     {% if  not user.is_authenticated %}
     <section>
-      <div class="price-button mt-md-3 mt-2">
         <div>
-            <img src="static/images/home_after_login.png" class="img-fluid" alt="mobile-image" align=center width="990" height="625" border="0" usemap="#Map_home" >
-            <map name="Map_home">
-            <area target="_blank" href="classlistpage" target="_self" coords="38,6,430,614" shape="rect" >
-            <area target="_blank" href="managementpage" target="_self" coords="580,9,939,612" shape="rect" >
-        </map>
+            <img src="static/images/home_after_login.png"  href="{% url 'wp_list' %}"  class="img-fluid" alt="startPOP-image" align=center>
         </div>
-      </div>
     </section>
     {% endif %}
 
 
-    {% if  user.is_authenticated %}
+    {% if not  user.is_authenticated %}
 
     <section class="banner-bottom-w3ls py-lg-5 py-4" id="about">
         <div class="container py-sm-5 py-4">
@@ -127,7 +122,7 @@
     </div>
   <!--// ProjectOwer -->
 
-
+  {% endif %}
     <!-- //banner-bottom-w3ls1 -->
     <section class="subscribe">
         <div class="layer two">
@@ -155,11 +150,11 @@
                 <div class="col-lg-4 test-grid text-left px-lg-3">
                     <div class="test-info">
 
-                        <p>MSSE of San Jose State University, Jerry Huang has been the industry's scientist since the 2015. </p>
+                        <p>MSSE of San Jose State University, Jerry Huang has been the industry's scientist since  2016. </p>
                         <h3 class="mt-md-4 mt-3"> Jerry Huang</h3>
 
                         <div class="test-img text-center mb-3">
-                            <img src="static/images/jerry.png" class="img-fluid" alt="user-image">
+                            <img src="static/images/jerry.png" class="img-fluid" alt="jerry-image">
                         </div>
                         <div class="mobl-footer test-soc text-center">
                             <ul class="list-unstyled">
@@ -181,10 +176,10 @@
                 <div class="col-lg-4 test-grid text-left px-lg-3">
                     <div class="test-info">
 
-                        <p>MSSE of San Jose State University, Han-Wei Lin has been the industry's scientist since the 2011.</p>
+                        <p>MSSE of San Jose State University, Han-Wei Lin has been the industry's scientist since  2015.</p>
                         <h3 class="mt-md-4 mt-3"> Han-Wei Lin</h3>
                         <div class="test-img text-center mb-3">
-                            <img src="static/images/wei.png" class="img-fluid" alt="user-image">
+                            <img src="static/images/wei.png" class="img-fluid" alt="Lin-image">
                         </div>
                         <div class="mobl-footer test-soc text-center">
                             <ul class="list-unstyled">
@@ -206,11 +201,11 @@
                 <div class="col-lg-4 test-grid text-left px-lg-3">
                     <div class="test-info">
 
-                        <p>MSSE of San Jose State University, Sun yat-san University,Blockchain algorithm engineer,Proficient in the economic model,Big data analysis,14 years in GD FDA Senior PM.</p>
+                        <p>MSSE of San Jose State University, Sun yat-san University,Blockchain  engineer,14 years in GD FDA Senior PM.</p>
                         <h3 class="mt-md-4 mt-3">Jacky Chow</h3>
 
                         <div class="test-img text-center mb-3">
-                            <img src="static/images/jacky.png" class="img-fluid" alt="user-image">
+                            <img src="static/images/jacky.png" class="img-fluid" alt="Jacky-image">
                         </div>
                         <div class="mobl-footer test-soc text-center">
                             <ul class="list-unstyled">
@@ -234,7 +229,7 @@
 
         </div>
     </section>
-    {% endif %}
+
 
     <!-- contact -->
     <section class="contact py-5" id="contact">
