@@ -23,7 +23,7 @@
         <div class="container py-sm-4 py-4">
       <section>
       <form method="post" enctype="multipart/form-data">
-        <table>
+        <table class="quizText h7">
           <tr>
             <th>Q1. {{ get_quiz.q1 }}</th>
           </tr>
@@ -42,7 +42,7 @@
         </table>
             {% csrf_token %}
             {{ ans1.as_p }}
-        <table>
+        <table class="quizText h7">
           <tr>
             <th>Q2. {{ get_quiz.q2 }}</th>
           </tr>
@@ -61,7 +61,7 @@
         </table>
             {% csrf_token %}
             {{ ans2.as_p }}
-        <table>
+        <table class="quizText h7">
           <tr>
             <th>Q3. {{ get_quiz.q3 }}</th>
           </tr>
@@ -80,7 +80,7 @@
         </table>
             {% csrf_token %}
             {{ ans3.as_p }}
-        <table>
+        <table class="quizText h7">
           <tr>
             <th>Q4. {{ get_quiz.q4 }}</th>
           </tr>
@@ -99,7 +99,7 @@
         </table>
             {% csrf_token %}
             {{ ans4.as_p }}
-        <table>
+        <table class="quizText h7">
           <tr>
             <th>Q5. {{ get_quiz.q5 }}</th>
           </tr>

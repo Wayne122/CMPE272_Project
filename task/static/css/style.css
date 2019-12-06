@@ -122,6 +122,16 @@ h1.logo a {
     font-family: 'Raleway', sans-serif;
 }
 
+.quizText {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid black;
+  background-color: grey;
+  color: white;
+}
+
 ul#menu {
     position: fixed;
     top: 4%;
@@ -397,6 +407,10 @@ ul.apps-lists li a span {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     white-space: normal;
+}
+
+.h7{
+    font-size: 25px;
 }
 
 .csslider > ul > li.scrollable {

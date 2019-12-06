@@ -18,7 +18,13 @@
     <div class="tlinks">Collect from <a>FatherOfLove</a></div>
     <!--/ banner-bottom-w3ls -->
 
-    {% if  not user.is_authenticated %}
+    {% if user.is_authenticated %}
+    <section>
+      <div class="price-button mt-md-3 mt-2">
+          <a class="btn text-uppercase" align=center href="{% url 'wp_list' %}">
+                          Start POP!</a>
+      </div>
+    </section>
     <section>
         <div>
             <img src="static/images/home_after_login.png"  href="{% url 'wp_list' %}"  class="img-fluid" alt="startPOP-image" align=center>
@@ -27,7 +33,7 @@
     {% endif %}
 
 
-    {% if not  user.is_authenticated %}
+    {% if not user.is_authenticated %}
 
     <section class="banner-bottom-w3ls py-lg-5 py-4" id="about">
         <div class="container py-sm-5 py-4">
