@@ -157,6 +157,33 @@ class wpQuizForm(forms.ModelForm):
     class Meta:
         model = wpQuiz
         exclude = ('WP',)
+        widgets = {
+            'q1': forms.TextInput(),
+            'q1a1': forms.TextInput(),
+            'q1a2': forms.TextInput(),
+            'q1a3': forms.TextInput(),
+            'q1a4': forms.TextInput(),
+            'q2': forms.TextInput(),
+            'q2a1': forms.TextInput(),
+            'q2a2': forms.TextInput(),
+            'q2a3': forms.TextInput(),
+            'q2a4': forms.TextInput(),
+            'q3': forms.TextInput(),
+            'q3a1': forms.TextInput(),
+            'q3a2': forms.TextInput(),
+            'q3a3': forms.TextInput(),
+            'q3a4': forms.TextInput(),
+            'q4': forms.TextInput(),
+            'q4a1': forms.TextInput(),
+            'q4a2': forms.TextInput(),
+            'q4a3': forms.TextInput(),
+            'q4a4': forms.TextInput(),
+            'q5': forms.TextInput(),
+            'q5a1': forms.TextInput(),
+            'q5a2': forms.TextInput(),
+            'q5a3': forms.TextInput(),
+            'q5a4': forms.TextInput(),
+        }
 
 
 def upload_quiz(request, wp_id):
