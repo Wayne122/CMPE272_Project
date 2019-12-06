@@ -19,11 +19,16 @@
       <h1>Project Owner update white paper Page!!!</h1>
       <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <p>Title: <a href="{{ old_file.WPFile.url }}">{{ old_file.title }}</a></p>
+          <p>Title: <a href="{{ old_file.WPFile.url }}" target="_blank">{{ old_file.title }}</a></p>
           <p>Description: {{ old_file.description }}</p>
           <p>Due Date: {{ old_file.dueTime }}</p>
-          <button type="submit" name="update">Update!</button>
-          <button type="submit" name="delete">Delete!</button>
+          {% if user.userrole.role == 'EX' and not old_file.accepted %}
+            <button type="submit" name="accept">Accept!</button>
+          {% endif %}
+          {% if user.userrole.role == "PO" %}
+            <button type="submit" name="update">Update!</button>
+            <button type="submit" name="delete">Delete!</button>
+          {% endif %}
       </form>
       <div class="price-button mt-md-3 mt-2">
           <a class="btn text-uppercase" href="{% url 'wp_list' %}">Cancel</a>
@@ -31,6 +36,9 @@
     </div>
     <div class="price-button mt-md-3 mt-2">
       <a class="btn text-uppercase" href="{% url 'class_list' wp_id=old_file.id %}">Class List</a>
+    </div>
+    <div class="price-button mt-md-3 mt-2">
+      <a class="btn text-uppercase" href="{% url 'task_list' wp_id=old_file.id %}">Task List</a>
     </div>
   </section>
   <section class="services py-lg-5 py-4" id="WhitePaper">

@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def homepage(request):
-    return render(request, 'blog/management_page.html', {})
+    return render(request, 'blog/task_list.html', {})
 
 def second_page(request):
     return render(request, 'blog/second_page.html', {})
@@ -20,4 +20,4 @@ def class_page(request):
     return render(request, 'blog/class_page.html', {})
 
 def management_page(request):
-    return render(request, 'blog/management_page.html', {})
+    return render(request, 'blog/task_list.html', {})

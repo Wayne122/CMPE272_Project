@@ -14,34 +14,31 @@
           </ul>
       </li>
   </ul>
-  {% if user.userrole.role == "EX" %}
   <section class="services py-lg-5 py-4" id="WhitePaper">
     <div class="container py-sm-4 py-4">
-      <h1>Welcome to Classlist Page!</h1>
-      <div class="price-button mt-md-3 mt-2">
-          <a class="btn text-uppercase" href="{% url 'upload_class' wp_id=wp_id %}">Upload Class!</a>
-      </div>
+      <h1>Welcome to Task Page!!!</h1>
+        {% if user.userrole.role == "PO" %}
+              <div class="price-button mt-md-3 mt-2">
+                  <a class="btn text-uppercase" href="{% url 'upload_task' wp_id=wp_id %}">CLick to Upload Task!</a>
+              </div>
+        {% endif %}
     </div>
   </section>
-    <section class="services py-lg-5 py-4" id="WhitePaper">
-      <div class="price-button mt-md-3 mt-2">
-          <a class="btn text-uppercase" href="{% url 'quiz_list' wp_id=wp_id %}">Edit the Quiz!</a>
-      </div>
-    </section>
-  {% endif %}
   <section class="services py-lg-5 py-4" id="WhitePaper">
     <div class="container py-sm-4 py-4">
       <table>
         <tr>
           <th>Title</th>
           <th>Description</th>
+          <th>Duetime</th>
           <th></th>
         </tr>
-        {% for oneCL in cl_list %}
-            <tr>
-              <td><a href="{% url 'update_class' wp_id=wp_id cl_id=oneCL.id %}">{{ oneCL.title }}</a></td>
-              <td>{{ oneCL.description }}</td>
-            </tr>
+        {% for oneTask in t_list %}
+          <tr>
+              <td><a href="{% url 'update_task' wp_id=wp_id t_id=oneTask.id %}">{{ oneTask.title }}</a></td>
+              <td>{{ oneTask.description }}</td>
+              <td>{{ oneTask.dueTime }}</td>
+          </tr>
         {% endfor %}
       </table>
     </div>
@@ -49,12 +46,5 @@
         <a class="btn text-uppercase" href="{% url 'update_wp' wp_id=wp_id %}">Back to White Paper</a>
     </div>
   </section>
-    {% if user.userrole.role == "AM" %}
-    <section class="services py-lg-5 py-4" id="WhitePaper">
-      <div class="price-button mt-md-3 mt-2">
-          <a class="btn text-uppercase" href="{% url 'take_quiz' wp_id=wp_id %}">Take the Quiz!</a>
-      </div>
-    </section>
-    {% endif %}
 </body>
 {% endblock %}

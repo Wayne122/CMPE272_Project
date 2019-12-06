@@ -20,7 +20,7 @@ def class_page(request):
     return render(request, 'blog/class_page.html', {})
 
 def management_page(request):
-    return render(request, 'blog/management_page.html', {})
+    return render(request, 'blog/task_list.html', {})
 
 def uploadwhitepage_page(request):
     return render(request, 'blog/upload_wp.html', {})

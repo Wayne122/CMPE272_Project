@@ -17,10 +17,12 @@
   <section class="services py-lg-5 py-4" id="WhitePaper">
     <div class="container py-sm-4 py-4">
       <h1>Welcome to Whitepaper Page!!!</h1>
+        {% if user.userrole.role == "PO" %}
               <h1>Project Owner upload white paper</h1>
               <div class="price-button mt-md-3 mt-2">
                   <a class="btn text-uppercase" href="{% url 'upload_wp' %}">CLick to Upload WhitePaper!</a>
               </div>
+        {% endif %}
     </div>
   </section>
   <section class="services py-lg-5 py-4" id="WhitePaper">
