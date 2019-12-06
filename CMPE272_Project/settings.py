@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'task',
+    'task.templatetags',
     'storages',
     'django_cleanup.apps.CleanupConfig',
 ]
@@ -68,6 +69,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'templatetags': 'task.templatetags.myfilter',
+            }
         },
     },
 ]

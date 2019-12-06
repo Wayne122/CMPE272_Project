@@ -1,5 +1,7 @@
 {% extends 'task/base.html' %}
+{% load myfilter %}
 {% block content %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
   <ul id="menu">
       <li>
@@ -23,9 +25,72 @@
   <div class="container py-sm-4 py-4">
     <section class="services py-lg-5 py-4" id="WhitePaper">
       <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="next">Upload!</button>
+          {% csrf_token %}
+          <a>Question 1:</a>
+          {{ form.q1|addclass:'w3-input w3-border w3-hover-red' }}
+          <a>Ans 1:</a>
+          {{ form.q1a1|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 2:</a>
+          {{ form.q1a2|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 3:</a>
+          {{ form.q1a3|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 4:</a>
+          {{ form.q1a4|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Correct Answer:</a>
+          {{ form.q1ans }}
+          <br/>
+          <a>Question 2:</a>
+          {{ form.q2|addclass:'w3-input w3-border w3-hover-red' }}
+          <a>Ans 1:</a>
+          {{ form.q2a1|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 2:</a>
+          {{ form.q2a2|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 3:</a>
+          {{ form.q2a3|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 4:</a>
+          {{ form.q2a4|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Correct Answer:</a>
+          {{ form.q2ans }}
+          <br/>
+          <a>Question 3:</a>
+          {{ form.q3|addclass:'w3-input w3-border w3-hover-red' }}
+          <a>Ans 1:</a>
+          {{ form.q3a1|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 2:</a>
+          {{ form.q3a2|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 3:</a>
+          {{ form.q3a3|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 4:</a>
+          {{ form.q3a4|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Correct Answer:</a>
+          {{ form.q3ans }}
+          <br/>
+          <a>Question 4:</a>
+          {{ form.q4|addclass:'w3-input w3-border w3-hover-red' }}
+          <a>Ans 1:</a>
+          {{ form.q4a1|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 2:</a>
+          {{ form.q4a2|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 3:</a>
+          {{ form.q4a3|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 4:</a>
+          {{ form.q4a4|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Correct Answer:</a>
+          {{ form.q4ans }}
+          <br/>
+          <a>Question 5:</a>
+          {{ form.q5|addclass:'w3-input w3-border w3-hover-red' }}
+          <a>Ans 1:</a>
+          {{ form.q5a1|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 2:</a>
+          {{ form.q5a2|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 3:</a>
+          {{ form.q5a3|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Ans 4:</a>
+          {{ form.q5a4|addclass:'w3-input w3-border w3-hover-blue' }}
+          <a>Correct Answer:</a>
+          {{ form.q5ans }}
+          <div class="price-button mt-md-3 mt-2"><button class="btn text-uppercase" type="submit" name="next">Upload!</button></div>
       </form>
       <div class="price-button mt-md-3 mt-2">
           <a class="btn text-uppercase" href="{% url 'quiz_list' wp_id=wp_id %}">Cancel</a>
