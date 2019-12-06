@@ -110,6 +110,7 @@ def upload_class(request, wp_id):
             if form.is_valid():
                 new_class = form.save(commit=False)
                 new_class.WP = whitePaper.objects.get(pk=wp_id)
+                new_class.video_url = new_class.video_url.replace("watch?v=", "embed/")
                 form.save()
                 return HttpResponseRedirect('/class_list/'+wp_id)
         else:
@@ -130,6 +131,8 @@ def update_class(request, wp_id, cl_id):
             elif 'update' in request.POST or 'upload' in request.POST:
                 form = wpClassForm(request.POST or None, instance=old_class)
                 if form.is_valid():
+                    new_class = form.save(commit=False)
+                    new_class.video_url = new_class.video_url.replace("watch?v=", "embed/")
                     form.save()
                     return HttpResponseRedirect('/update_class/'+wp_id+'/'+cl_id)
                 return render(request, 'task/upload_class.html', {'form': form, 'cl_list': cl_list, 'wp_id': wp_id})
